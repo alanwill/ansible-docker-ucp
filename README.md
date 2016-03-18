@@ -5,7 +5,7 @@ Docker UCP requires Engine networking to be [configured](https://docs.docker.com
 This playbook assumes the following tagging structure:
 
 | UCP Component | Tag Key | Tag Value |
-|--------------------------------------|
+| ------------- | ------- | --------- |
 | Primary Controller | Name | UCP Controller Master |
 | Replica Controllers | Name | UCP Controller Nodes |
 | Worker Nodes | Name | UCP Worker Nodes |
