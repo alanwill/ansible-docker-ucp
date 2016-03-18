@@ -1,0 +1,26 @@
+---
+# This playbook configures Docker UCP host networking.  
+
+- name: Update the UCP Controller primary node 
+  hosts: tag_Name_UCP_Controller_Master
+  remote_user: ubuntu
+
+  roles:
+    - docker-networking
+
+- name: Update the UCP Controller replica nodes
+  hosts: tag_Name_UCP_Controller_Nodes
+  serial: 1
+  remote_user: ubuntu
+
+  roles:
+    - docker-networking
+
+- name: Update the UCP Worker nodes
+  hosts: tag_Name_UCP_Worker_Nodes
+  serial: "10%"
+  remote_user: ubuntu
+
+  roles:
+    - docker-networking
+

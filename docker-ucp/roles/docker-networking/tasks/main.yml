@@ -1,0 +1,19 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Run discovery-engine command 
+  shell: docker run --rm -it --name ucp -v /var/run/docker.sock:/var/run/docker.sock docker/ucp engine-discovery --controller {{ hostvars[groups['tag_Name_UCP_Controller_Master'][0]]['ec2_private_ip_address'] }} --controller {{ hostvars[groups['tag_Name_UCP_Controller_Nodes'][0]]['ec2_private_ip_address'] }} --controller {{ hostvars[groups['tag_Name_UCP_Controller_Nodes'][1]]['ec2_private_ip_address'] }} --host-address {{ ec2_private_ip_address }} --update 
+
+- name: Restart docker engine 
+  service: name=docker state=restarted
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Test networking (create)
+  shell: docker network create -d overlay test-network
+  run_once: true
+
+- name: Test networking (delete)
+  shell: docker network rm test-network 
+  run_once: true
